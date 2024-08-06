@@ -1,4 +1,4 @@
-Game Boy Color-inspired Tricorder.
+# Game Boy Color-inspired Tricorder.
 
 A mobile sensor logger, based on the Raspberry Pi Pico and fit into a Game Boy Color reproduction case.
 
