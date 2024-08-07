@@ -1,4 +1,4 @@
-# Game Boy Color-inspired Tricorder.
+#Game Boy Color-inspired Tricorder.
 
 A mobile sensor logger, based on the Raspberry Pi Pico and fit into a Game Boy Color reproduction case.
 
@@ -29,13 +29,40 @@ For my own use, I plan to attach both a CO2 sensor and some sort of temperature/
 It might be possible to use both I2C channels, both UART channels, one SPI channel, one analog channel, and several digital channels for sensors if those channels aren't already being used by the EXT Port or another sensor.
 
 Unfortunately, there isn't a consistent pinout used for sensors and the Pi Pico isn't especially flexible with how pins can be used, so I kind of just have to guess and then hope for the best.
+
+- SGP30 uses I2C1 code 0x58
+- BME280 uses I2C1 code 0x76 or 0x77
+
+| Bus   | Main Use       | Pins                   |
+| ----- | -------------- | ---------------------- |
+| I2C0  | EXT Port       | GP12, GP13             |
+| I2C1  | Sensors        | GP10, GP15             |
+| UART0 | EXT Port       | GP12, GP13             |
+| UART1 | Headphone Jack | GP08, GP09             |
+| SPI0  | Display        | GP18, GP19, GP20, GP21 |
+| SPI1  | EXT Port       | GP12, GP13, GP13, GP27 |
 ## Buttons
-The Boycorder has eight buttons, based on the same conductive silicone design as the original Game Boy.
+The Boycorder has eight buttons, based on the same conductive silicone design as the original Game Boy. All buttons are normally floating, and grounded when pressed.
 
 Currently, each button is wired directly to a GPIO. In the future, I may use an IO expander or matrix to free up some GPIO.
+
+| Button | Pin  | Notes                         |
+| ------ | ---- | ----------------------------- |
+| UP     | GP07 | Broken out to cartridge slot. |
+| LEFT   | GP05 |                               |
+| DOWN   | GP03 |                               |
+| RIGHT  | GP01 |                               |
+| SELECT | GP00 | Broken out to cartridge slot. |
+| START  | GP02 | Broken out to cartridge slot. |
+| B      | GP04 |                               |
+| A      | GP06 |                               |
 ## Power Management
 This design mostly depends on the internal power management of the Raspberry Pi Pico. It can accept either two AA batteries or one 14500 with a dummy battery to bridge the other battery slot.
 
-A diode will automatically switch to the highest voltage volume source. Safe input voltage range is 1V8 to 5V5.
+A diode will automatically switch to the highest voltage volume source. Safe input voltage range is 1V8 to 5V5. Batteries need to be charged externally.
 ## Speaker or Fan
 A single GPIO is dedicated to run either a speaker, a fan, or any other component that would physically fit into the CGB's speaker area. A small fan controlled over PWM is intended here, to support air flow to sensors.
+## Circuit Board
+This PCB is currently untested.
+
+Board needs to be 1.0mm to fit in case. An ENIG finish is best for button performance.
